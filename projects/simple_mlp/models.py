@@ -16,7 +16,7 @@ class MyModel(nn.Module):
             if i != number_of_hidden_layers-2:
                 hidden_size = hidden_size // 2 #Halve the number of neurons for the next layer, except if it is the last layer
 
-        layers.append(nn.Linear(input_size, hidden_size))
+        layers.append(nn.Linear(input_size, output_size))
         self.layers = nn.Sequential(*layers)
         #self.layersE = nn.ModuleList(layers)
     def forward(self, x):
