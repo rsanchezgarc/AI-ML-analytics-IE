@@ -169,3 +169,7 @@ cython_debug/
 
 # PyPI configuration file
 .pypirc
+
+# Datasets
+AI-ML-analytics-IE/projects/simple_mlp/data/input_data.pt
+AI-ML-analytics-IE/projects/simple_mlp/data/labels.pt
