@@ -7,6 +7,9 @@ from pytorch_lightning.callbacks import EarlyStopping, ModelCheckpoint
 from pytorch_lightning.loggers import TensorBoardLogger
 from pathlib import Path
 from typing import Tuple, Dict, Any
+import json
+from sklearn.model_selection import StratifiedShuffleSplit
+from torch.utils.data import Subset
 
 # from customLosses import WeightedMSELoss
 from datamanager import MyDataset, create_dataloader
@@ -150,21 +153,36 @@ def plot_predictions(train_preds: np.ndarray, train_actuals: np.ndarray,
     if save_path:
         plt.savefig(save_path)
     plt.show()
+    
+def create_stratified_split(dataset, n_bins, n_splits):
+    y = dataset.y.numpy()
+    
+    binned_y = np.digitize(y, bins=np.linspace(y.min(), y.max(), n_bins))
+    
+    sss = StratifiedShuffleSplit(n_splits=n_splits, test_size=0.3, random_state=0)
+    
+    for train_index, val_index in sss.split(np.zeros(len(y)), binned_y):
+        train_dataset = Subset(dataset, train_index)
+        val_dataset = Subset(dataset, val_index)
+        return train_dataset, val_dataset 
 
 
 def main():
-    # Configuration
-    CONFIG = {
-        'batch_size': 256,
-        'hidden_size': 512,
-        'num_hidden_layers': 8,
-        'learning_rate': 1e-4,
-        'weight_decay': 1e-3,
-        'max_epochs': 10,
-        'patience': 50,
-        'accumulate_grad_batches': 2,
-        'gradient_clip_val': 4,
-    }
+    # Initial Configuration
+    # CONFIG = {
+    #     'batch_size': 256,
+    #     'hidden_size': 512,
+    #     'num_hidden_layers': 8,
+    #     'learning_rate': 1e-4,
+    #     'weight_decay': 1e-3,
+    #     'max_epochs': 10,
+    #     'patience': 50,
+    #     'accumulate_grad_batches': 2,
+    #     'gradient_clip_val': 4,
+    # }
+
+    # Optimized Configuration
+    CONFIG = json.load(open("AI-ML-analytics-IE/projects/simple_mlp/src/config/best_params.json"))
 
     # Create output directory
     output_dir = Path("outputs")
