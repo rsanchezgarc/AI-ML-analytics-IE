@@ -8,10 +8,10 @@ from pytorch_lightning.loggers import TensorBoardLogger
 from pathlib import Path
 from typing import Tuple, Dict, Any
 
-from src.customLosses import WeightedMSELoss
-from src.datamanager import MyDataset, create_dataloader
-from src.datapreprocer import create_stratified_split
-from src.models import MyModel
+# from customLosses import WeightedMSELoss
+from datamanager import MyDataset, create_dataloader
+from datapreprocessor import create_stratified_split
+from models import MyModel
 
 
 class MyModelPl(pl.LightningModule):
@@ -171,8 +171,8 @@ def main():
     output_dir.mkdir(exist_ok=True)
 
     # Load data
-    x = torch.load("../data/input_data.pt", weights_only=False)
-    y = torch.load("../data/labels.pt", weights_only=False)
+    x = torch.load("AI-ML-analytics-IE/projects/simple_mlp/data/input_data.pt", weights_only=False)
+    y = torch.load("AI-ML-analytics-IE/projects/simple_mlp/data/labels.pt", weights_only=False)
     dataset = MyDataset(x, y)
 
     # Create stratified split
