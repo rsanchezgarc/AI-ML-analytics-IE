@@ -1,0 +1,11 @@
+{
+    "hidden_size": 145,
+    "max_epochs": 10,
+    "num_hidden_layers": 3,
+    "learning_rate": 0.005909368888904363,
+    "weight_decay": 1.6671659103023415e-06,
+    "batch_size": 64,
+    "gradient_clip_val": 4.8863869734212875,
+    "accumulate_grad_batches": 1,
+    "patience": 50
+}

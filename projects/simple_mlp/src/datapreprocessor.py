@@ -1,6 +1,7 @@
 import torch
 from sklearn.datasets import fetch_california_housing
-
+from pathlib import Path
+    
 #You know how to do 
 #inputation
 #input normalization
@@ -18,5 +19,11 @@ y = torch.as_tensor(y, dtype=torch.float32)
 #If you normalize the label, don't forget to unnormalize it in the prediction.
 print(X.shape, y.shape)
 print(y)
+
+output_dir = Path("data")
+output_dir.mkdir(exist_ok=True)
+
 torch.save(X, "data/input_data.pt")
 torch.save(y, "data/labels.pt")
+
+
